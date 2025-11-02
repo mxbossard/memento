@@ -4,10 +4,11 @@ scriptDir="$( dirname $( readlink -f "$0" ) )"
 
 . "$scriptDir/_common.sh"
 
+entryMsg="$1"
+
 >&2 echo " > 1- Init diary repo ..."
-test -d "$GIT_DIR" || git clone -o "$GIT_REMOTE" "$DIARY_REMOTE_URL" "$GIT_DIR"
-cd "$GIT_DIR"
-#git remote add "$GIT_REMOTE" "$DIARY_REMOTE_URL" || true
+test -d "$GIT_LOCAL_REPO" || git clone -o "$GIT_REMOTE" "$DIARY_GIT_REPO_URL" "$GIT_LOCAL_REPO"
+cd "$GIT_LOCAL_REPO"
 mkdir -p "$DB_DIR"
 
 git fetch --all --prune
@@ -33,7 +34,15 @@ git switch "$todayBranch" || git checkout -b "$todayBranch" "$MAIN_BRANCH" || gi
 mkdir -p "$entryDir"
 #echo "\n" >> "$entryFilepath"
 #vi -c 'startinsert' "$entryFilepath"
-vi "$entryFilepath"
+
+if [ -n "$entryMsg" ]; then
+	if [ -f "$entryFilepath" ]; then
+		echo "" >> "$entryFilepath"
+	fi 
+	echo "$entryMsg" >> "$entryFilepath"
+else
+	vi "$entryFilepath"
+fi
 
 >&2 echo " > 4- Commit and Push changes ..."
 git add "$entryFilepath"

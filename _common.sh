@@ -3,17 +3,17 @@ set -e
 scriptDir="$( dirname $( readlink -f "$0" ) )"
 
 TEMP_DIR="/tmp"
-DIARY_REMOTE_URL="/home/maxbundy/git/diary-memento-bare"
+DIARY_GIT_REPO_URL="${DIARY_GIT_REPO_URL:-/home/maxbundy/git/diary-memento-bare}"
+GIT_LOCAL_REPO="${GIT_LOCAL_REPO:-$TEMP_DIR/diary}"
 THEME="diary"
 GIT_REMOTE="diary"
 MAIN_BRANCH="main"
-GIT_DIR="$TEMP_DIR/diary"
-DB_DIR="$GIT_DIR/.db"
+DB_DIR="$GIT_LOCAL_REPO/.db"
 
-YEAR="$( date '+%+4Y' )"
-MONTH="$( date '+%m' )"
-DAY="$( date '+%d' )"
-DAY=01
+DIARY_DATE="${DIARY_DATE:-}"
+YEAR="$( date -d "$DIARY_DATE" '+%+4Y' )"
+MONTH="$( date -d "$DIARY_DATE" '+%m' )"
+DAY="$( date -d "$DIARY_DATE" '+%d' )"
 
 #entryFilename="$( date '+%F' )-$( hostname )-$( git rev-parse --short HEAD ).txt"
 entryFilename="$YEAR-$MONTH-$DAY-$THEME.txt"

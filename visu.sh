@@ -32,9 +32,14 @@ tailPid="$!"
 	kill "$tailPid"
 } &
 
-less 0< diaryPipe
+if echo "$@" | grep -- "-c" > /dev/null; then
+	cat 0< diaryPipe
+else
+	less 0< diaryPipe
+fi
 
 #vi "$tmpFile"
 #less "$tmpFile"
 
-rm -rf "$TEMP_DIR/diary.*.dir"
+cd
+rm -rf -- "$TEMP_DIR/diary.*.dir"
