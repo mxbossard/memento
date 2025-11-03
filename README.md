@@ -20,6 +20,7 @@ J'utilise le dépôt git pour centraliser mes notes sur plusieurs ordis
 - Une commande pour push ?
 - addEntry [MESSAGE]
 - visualisation [-t THEME] 
+- Chiffrer les documents sur le remote ?
 
 # Use Cases
 
@@ -54,6 +55,20 @@ J'utilise le dépôt git pour centraliser mes notes sur plusieurs ordis
 - Une classe de documents non chronologique spécifiques éditables attachés à un ou plusieurs themes ?
 - Visualiser le journal par theme permet d'écrire dans un document non journalisé dédié au theme ?
 - Comment merge ces documents ?
+
+## Chiffrement sur public remote
+Pour archiver son memento sur un dépot git public nous pourrions utiliser un chiffrement symetrique avant de push sur le remote.
+- Chaque fichier pourrait donner lieu à un fichier chiffré
+  - Lors de la modification d'un fichier ne modifie qu'un seul fichier chiffré ce qui devrai réduire les impacts sur la DB .git
+- L'arborescence pourrait être conservée par soucis de simplicité
+  - Est-ce que cela pose des problèmes de sécurité ? Facilitation du déchiffrement ?
+- Chaque nom de fichier et dossier devrait être modifié (salt ?) avant chiffrement
+  - Augmenter la sécurité en ne permettant pas d'inferer les nom des fichiers.i
+
+- git-remote-gcrypt ?
+  - Do a force push on every push
+  - Not adapted for large repo
+
 
 # Commit / Push cinematics
 
